@@ -1,0 +1,38 @@
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class DataCreation {
+    public static void main(String[] args) {
+        String fileName = "rainfall_data.dat";
+
+        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(fileName))) {
+            int numStations = 4; // Number of stations
+            int numDistricts = 2; // Number of districts
+
+            dos.writeInt(numStations);
+            dos.writeInt(numDistricts);
+
+            for (int i = 1; i <= numDistricts; i++) {
+                for (int j = 1; j <= numStations / numDistricts; j++) {
+                    dos.writeInt(i * 100 + j);
+
+                    String stationName = "Station " + (i * 100 + j);
+                    dos.writeUTF(stationName);
+
+                    String districtName = "District " + i;
+                    dos.writeUTF(districtName);
+
+                    for (int k = 1; k <= 6; k++) {
+                        int rainfall = Math.random() * 10; // Random rainfall value between 0 and 10
+                        dos.writeDouble(rainfall);
+                    }
+                }
+            }
+
+            System.out.println("Data creation completed.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
