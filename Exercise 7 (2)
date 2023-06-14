@@ -1,0 +1,53 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class DataConsumption {
+    public static void main(String[] args) {
+        String fileName = "rainfall_data.txt";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            int numStations = 0;
+            int numDistricts = 0;
+
+            System.out.println("Station Rainfall Data:");
+
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("Station ID")) {
+                    // Skip the header line
+                    continue;
+                }
+
+                String[] data = line.split("\t");
+                if (data.length == 9) {
+                    int stationId = Integer.parseInt(data[0]);
+                    String stationName = data[1];
+                    String districtName = data[2];
+                    double[] rainfall = new double[6];
+
+                    for (int i = 0; i < 6; i++) {
+                        rainfall[i] = Double.parseDouble(data[i + 3]);
+                    }
+
+                    System.out.println("Station ID: " + stationId);
+                    System.out.println("Station Name: " + stationName);
+                    System.out.println("District Name: " + districtName);
+                    System.out.println("Rainfall Data:");
+                    for (int i = 0; i < 6; i++) {
+                        System.out.println("Day " + (i + 1) + ": " + rainfall[i]);
+                    }
+                    System.out.println();
+
+                    numStations++;
+                    numDistricts++;
+                }
+            }
+
+            System.out.println("Number of Stations: " + numStations);
+            System.out.println("Number of Districts: " + numDistricts);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
