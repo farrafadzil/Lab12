@@ -1,34 +1,26 @@
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class DataCreation {
     public static void main(String[] args) {
-        String fileName = "rainfall_data.dat";
+        String fileName = "rainfall_data.txt";
 
-        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(fileName))) {
-            int numStations = 4; // Number of stations
-            int numDistricts = 2; // Number of districts
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            writer.write("Station ID\tStation Name\tDistrict Name\tDay 1\tDay 2\tDay 3\tDay 4\tDay 5\tDay 6");
+            writer.newLine();
 
-            dos.writeInt(numStations);
-            dos.writeInt(numDistricts);
+            writer.write("101\tStation 101\tDistrict 1\t3.62\t4.75\t9.24\t4.54\t6.96\t8.87");
+            writer.newLine();
 
-            for (int i = 1; i <= numDistricts; i++) {
-                for (int j = 1; j <= numStations / numDistricts; j++) {
-                    dos.writeInt(i * 100 + j);
+            writer.write("102\tStation 102\tDistrict 1\t2.68\t5.18\t6.40\t1.25\t3.67\t0.63");
+            writer.newLine();
 
-                    String stationName = "Station " + (i * 100 + j);
-                    dos.writeUTF(stationName);
+            writer.write("201\tStation 201\tDistrict 2\t3.34\t5.83\t7.29\t3.00\t2.43\t8.84");
+            writer.newLine();
 
-                    String districtName = "District " + i;
-                    dos.writeUTF(districtName);
-
-                    for (int k = 1; k <= 6; k++) {
-                        int rainfall = Math.random() * 10; // Random rainfall value between 0 and 10
-                        dos.writeDouble(rainfall);
-                    }
-                }
-            }
+            writer.write("202\tStation 202\tDistrict 2\t8.81\t6.80\t4.95\t7.30\t1.15\t3.05");
+            writer.newLine();
 
             System.out.println("Data creation completed.");
         } catch (IOException e) {
@@ -36,3 +28,9 @@ public class DataCreation {
         }
     }
 }
+Footer
+© 2023 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Se
