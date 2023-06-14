@@ -1,6 +1,23 @@
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+
+public class DataCreation {
+    public static void main(String[] args) {
+        int[] rainfallData = {10, 5, 8, 12, 7, 15}; // Example data
+
+        try (DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream("rainfall_data.dat"))) {
+            for (int rainfall : rainfallData) {
+                dataOutputStream.writeInt(rainfall);
+            }
+            System.out.println("Data creation completed.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while creating the data: " + e.getMessage());
+        }
+    }
+}
 
 public class DataConsumption {
     public static void main(String[] args) {
